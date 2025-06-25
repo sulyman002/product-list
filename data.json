@@ -1,14 +1,14 @@
-const productListData = [
+[
     {
-        "image": {
+       "image": {
             "thumbnail": "./assets/images/image-waffle-thumbnail.jpg",
             "mobile": "./assets/images/image-waffle-mobile.jpg",
             "tablet": "./assets/images/image-waffle-tablet.jpg",
             "desktop": "./assets/images/image-waffle-desktop.jpg"
-        },
-        "name": "Waffle with Berries",
-        "category": "Waffle",
-        "price": 6.50
+       },
+       "name": "Waffle with Berries",
+       "category": "Waffle",
+       "price": 6.50
     },
     {
         "image": {
@@ -20,8 +20,8 @@ const productListData = [
         "name": "Vanilla Bean Crème Brûlée",
         "category": "Crème Brûlée",
         "price": 7.00
-    },
-    {
+     },
+     {
         "image": {
             "thumbnail": "./assets/images/image-macaron-thumbnail.jpg",
             "mobile": "./assets/images/image-macaron-mobile.jpg",
@@ -31,8 +31,8 @@ const productListData = [
         "name": "Macaron Mix of Five",
         "category": "Macaron",
         "price": 8.00
-    },
-    {
+     },
+     {
         "image": {
             "thumbnail": "./assets/images/image-tiramisu-thumbnail.jpg",
             "mobile": "./assets/images/image-tiramisu-mobile.jpg",
@@ -42,8 +42,8 @@ const productListData = [
         "name": "Classic Tiramisu",
         "category": "Tiramisu",
         "price": 5.50
-    },
-    {
+     },
+     {
         "image": {
             "thumbnail": "./assets/images/image-baklava-thumbnail.jpg",
             "mobile": "./assets/images/image-baklava-mobile.jpg",
@@ -53,8 +53,8 @@ const productListData = [
         "name": "Pistachio Baklava",
         "category": "Baklava",
         "price": 4.00
-    },
-    {
+     },
+     {
         "image": {
             "thumbnail": "./assets/images/image-meringue-thumbnail.jpg",
             "mobile": "./assets/images/image-meringue-mobile.jpg",
@@ -64,8 +64,8 @@ const productListData = [
         "name": "Lemon Meringue Pie",
         "category": "Pie",
         "price": 5.00
-    },
-    {
+     },
+     {
         "image": {
             "thumbnail": "./assets/images/image-cake-thumbnail.jpg",
             "mobile": "./assets/images/image-cake-mobile.jpg",
@@ -75,8 +75,8 @@ const productListData = [
         "name": "Red Velvet Cake",
         "category": "Cake",
         "price": 4.50
-    },
-    {
+     },
+     {
         "image": {
             "thumbnail": "./assets/images/image-brownie-thumbnail.jpg",
             "mobile": "./assets/images/image-brownie-mobile.jpg",
@@ -86,8 +86,8 @@ const productListData = [
         "name": "Salted Caramel Brownie",
         "category": "Brownie",
         "price": 4.50
-    },
-    {
+     },
+     {
         "image": {
             "thumbnail": "./assets/images/image-panna-cotta-thumbnail.jpg",
             "mobile": "./assets/images/image-panna-cotta-mobile.jpg",
@@ -97,48 +97,5 @@ const productListData = [
         "name": "Vanilla Panna Cotta",
         "category": "Panna Cotta",
         "price": 6.50
-    }
+     }
 ]
-
-const cardsContainer = document.getElementById('cardsContainer');
-
-productListData.forEach(card => {
-    //container for the card
-    const cardTemplate = document.createElement('div');
-    cardTemplate.className ='cardTemp'
-    cardTemplate.id = 'cardT'
-    //link to the parent
-    cardTemplate.append(imgCart);
-    cardTemplate.append(cardText);
-    // children  first
-    const imgCart = document.createElement('div');
-    imgCart.className = 'imgCartHolder'
-    imgCart.append(img);
-    imgCart.append(cart);
-    // first child too
-    const img = document.createElement('img');
-    img.className = 'imgs';
-
-    const cart = document.createElement('div');
-    cart.className = 'carts';
-    
-
-    //children second
-
-    const cardText = document.createElement('cardText');
-    cardText.className = 'cardTex';
-    cardText.append(p1);
-    cardText.append(h);
-    cardText.append(p2);
-    
-    // second child too
-    const p1 = document.createElement('p');
-    const h = document.createElement('h2');
-    const p2 = document.createElement('p');
-
-    p1.className = 'nam'
-    h.className = 'categ'
-    p2.className = 'pric'
-
-});
-
