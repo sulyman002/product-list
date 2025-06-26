@@ -111,17 +111,17 @@ productListData.forEach(card => {
             <img class="rounded-lg" src="${card.image.desktop}" alt="">
 
             <div
-                class=" hidden h-12 flex absolute items-center active:border-2 shadow active:border-blue-900 justify-center w-2/3 bg-white rounded-full py-3 gap-2">
+                class="cartText h-12 cursor-pointer flex absolute items-center active:border-2 shadow active:border-blue-900 justify-center w-2/3 bg-white rounded-full py-3 gap-2">
                 <img src="/assets/images/icon-add-to-cart.svg" alt="">
                 <p class="font-semibold text-sm">Add to Cart</p>
 
             </div>
 
-            <div
-                class="h-12 text-white flex absolute items-center active:border-2 shadow active:border-blue-900 justify-between w-2/3 bg-red-600 rounded-full py-3 px-6 gap-2">
-                <img class="border-[1px] border-white p-2 rounded-full" src="/assets/images/icon-decrement-quantity.svg" alt="">
-                <p>0</p>
-                <img class="border-[1px] border-white p-2 rounded-full" src="/assets/images/icon-increment-quantity.svg" alt="">
+            <div 
+                class="increDecre hidden h-12 cursor-pointer text-white flex absolute items-center active:border-2 shadow active:border-blue-900 justify-between w-2/3 bg-red-600 rounded-full py-3 px-6 gap-2">
+                <img   class=" decrementBtn border-[1px] border-white p-2 rounded-full" src="/assets/images/icon-decrement-quantity.svg" alt="">
+                <p class = "cartTextValue" >0</p>
+                <img  class="incrementBtn border-[1px] border-white p-2 rounded-full" src="/assets/images/icon-increment-quantity.svg" alt="">
             </div>
 
         </div>
@@ -131,113 +131,156 @@ productListData.forEach(card => {
             <h2 class="font-semibold">${card.category}</h2>
             <p class="font-semibold text-red-500">$${card.price.toFixed(2)}</p>
         </div> 
-    `
+    `;
+
+    const cartText = cardsContainer.querySelector('.cartText');
+    const increDecre = cardsContainer.querySelector('.increDecre');
+    const cartTextValue = cardsContainer.querySelector('.cartTextValue');
+    const trackOrder = document.querySelector('.trackOrder');
+
+    let value = 0;
+    cartText.addEventListener('click', () => {
+        cartText.classList.add('hidden');
+        increDecre.classList.remove('hidden');
+        value = 1;
+        cartTextValue.textContent = value;
+    });
+
+    //decrement & increament
+
+    const decrementBtn = cardsContainer.querySelector('.decrementBtn');
+    const incrementBtn = cardsContainer.querySelector('.incrementBtn');
+
+    decrementBtn.addEventListener('click', () => {
+        if (value > 0) {
+            value--;
+            cartTextValue.textContent = value;
+            
+        }
+    });
+
+    function collectMyCount(giveMeYourEvent){
+        console.log(`this is the value am bringing for you from ${giveMeYourEvent}`);
+        const result = giveMeYourEvent + 100;
+        console.log(result)
+        return result;
+    }
+
+    // console.log(`your cart is: ${result}`);
+
+
+    incrementBtn.addEventListener('click', () => {
+        value++;
+        cartTextValue.textContent = value;
+        collectMyCount(value);
+    });
+
     generalContainer.appendChild(cardsContainer)
 });
 
+// const cardText = document.querySelectorAll('#cartText');
+// const increDecre = document.querySelectorAll('#increDecre');
+// const incrementBtn = document.querySelectorAll('.incrementBtn');
+// const decrementBtn = document.querySelectorAll('.decrementBtn');
+// const cartTextValue = document.getElementById('cartTextValue');
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// productListData.forEach(card => {
-//     //container for the card
-//     const cardTemplate = document.createElement('div');
-//     cardTemplate.className ='cardTemp';
-//     cardTemplate.id = 'cardT';
-//     //link to the parent
-//     cardTemplate.append(imgCart);
-//     cardTemplate.append(cardText);
-//     // children  first
-//     const imgCart = document.createElement('div');
-//     imgCart.className = 'imgCartHolder';
-//     imgCart.append(img);
-//     imgCart.append(cart);
-//     // first child too
-//     const img = document.createElement('img');
-//     img.className = 'imgs';
-
-//     const cart = document.createElement('div');
-//     cart.className = 'carts';
-    
-
-//     //children second
-
-//     const cardText = document.createElement('cardText');
-//     cardText.className = 'cardTex';
-//     cardText.append(p1);
-//     cardText.append(h);
-//     cardText.append(p2);
-    
-//     // second child too
-//     const p1 = document.createElement('p');
-//     const h = document.createElement('h2');
-//     const p2 = document.createElement('p');
-
-//     p1.className = 'nam';
-//     h.className = 'categ';
-//     p2.className = 'pric';
-
-//     // the function now
-
-//     img.textContent = `${card.image.mobile}`;
-//     cart.textContent = `url(.../)`
-
+// cardText.forEach((cardT, index) => {
+//     cardT.addEventListener('click', () => {
+//         cardT.classList.add('hidden'); // use cardT, not cardText
+//         increDecre[index].classList.remove('hidden');
+//         value = 0;
+//         cartTextValue.textContent = value;
+//     });
 // });
+
+
+//     let value = 0
+// function decrement() {
+//     decrementBtn.forEach(datBtn => {
+//         if(value <= 0){
+//         cartTextValue.textContent = 0;
+//     }else{
+//     value--;
+//         cartTextValue.textContent = value;}
+//     });
+// }
+
+// decrementBtn.forEach(decr => {
+//     decr.addEventListener('click', () => {
+//         value--;
+//         cartTextValue.textContent = value;
+//     });
+// });
+
+
+
+// function increment() {
+//     value++;
+//     cartTextValue.textContent = value;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
