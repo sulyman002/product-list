@@ -133,94 +133,71 @@ productListData.forEach(card => {
         </div> 
     `;
 
+
     const cartText = cardsContainer.querySelector('.cartText');
     const increDecre = cardsContainer.querySelector('.increDecre');
-    const cartTextValue = cardsContainer.querySelector('.cartTextValue');
-    const trackOrder = document.querySelector('.trackOrder');
 
-    let value = 0;
+    const emptyCart = document.querySelector('.emptyCart');
+    const ordersDetails = document.querySelector('.ordersDetails');
+
     cartText.addEventListener('click', () => {
         cartText.classList.add('hidden');
         increDecre.classList.remove('hidden');
-        value = 1;
-        cartTextValue.textContent = value;
-    });
 
-    //decrement & increament
-
-    const decrementBtn = cardsContainer.querySelector('.decrementBtn');
-    const incrementBtn = cardsContainer.querySelector('.incrementBtn');
-
-    decrementBtn.addEventListener('click', () => {
-        if (value > 0) {
-            value--;
-            cartTextValue.textContent = value;
-            
+        if(emptyCart && ordersDetails) {
+            emptyCart.classList.add('hidden');
+            ordersDetails.classList.remove('hidden');
         }
-    });
-
-    function collectMyCount(giveMeYourEvent){
-        console.log(`this is the value am bringing for you from ${giveMeYourEvent}`);
-        const result = giveMeYourEvent + 100;
-        console.log(result)
-        return result;
-    }
-
-    // console.log(`your cart is: ${result}`);
-
-
-    incrementBtn.addEventListener('click', () => {
-        value++;
-        cartTextValue.textContent = value;
-        collectMyCount(value);
+        
     });
 
     generalContainer.appendChild(cardsContainer)
 });
 
-// const cardText = document.querySelectorAll('#cartText');
-// const increDecre = document.querySelectorAll('#increDecre');
-// const incrementBtn = document.querySelectorAll('.incrementBtn');
-// const decrementBtn = document.querySelectorAll('.decrementBtn');
-// const cartTextValue = document.getElementById('cartTextValue');
+
+
+const cartTextValue = document.querySelectorAll('.cartTextValue');
 
 
 
 
-// cardText.forEach((cardT, index) => {
-//     cardT.addEventListener('click', () => {
-//         cardT.classList.add('hidden'); // use cardT, not cardText
-//         increDecre[index].classList.remove('hidden');
-//         value = 0;
-//         cartTextValue.textContent = value;
-//     });
-// });
+//decrement & increament
+let value = new Array(cartTextValue.length).fill(0);
+
+const decrementBtn = document.querySelectorAll('.decrementBtn');
+const incrementBtn = document.querySelectorAll('.incrementBtn');
+
+decrementBtn.forEach((decrease, index) => {
+    decrease.addEventListener('click', () => {
+        if (value[index] > 0) {
+            value[index]--;
+            cartTextValue[index].textContent = value[index];
+            cartTotal()
+        }
+    });
+});
+
+incrementBtn.forEach((increase, index) => {
+    increase.addEventListener('click', () => {
+        value[index]++;
+        cartTextValue[index].textContent = value[index];
+        cartTotal()
+    })
+});
 
 
-//     let value = 0
-// function decrement() {
-//     decrementBtn.forEach(datBtn => {
-//         if(value <= 0){
-//         cartTextValue.textContent = 0;
-//     }else{
-//     value--;
-//         cartTextValue.textContent = value;}
-//     });
-// }
-
-// decrementBtn.forEach(decr => {
-//     decr.addEventListener('click', () => {
-//         value--;
-//         cartTextValue.textContent = value;
-//     });
-// });
+const trackOrder = document.querySelector('.trackOrder');
+function cartTotal() {
+    const total = value.reduce((prev, next) =>
+        prev + next, 0
+    );
+    trackOrder.textContent = total;
+}
 
 
 
-// function increment() {
-//     value++;
-//     cartTextValue.textContent = value;
-// }
+
+
 
 
 
