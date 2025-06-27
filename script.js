@@ -191,7 +191,7 @@ function cartTotal() {
     const total = value.reduce((prev, next) =>
         prev + next, 0
     );
-    trackOrder.textContent = total;
+    trackOrder.textContent = `(${total})`;
 }
 
 
