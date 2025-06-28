@@ -102,6 +102,10 @@ const productListData = [
 
 const generalContainer = document.getElementById('generalContainer');
 
+let orderArray = [];
+
+
+
 productListData.forEach(card => {
     const cardsContainer = document.createElement('div');
 
@@ -144,16 +148,54 @@ productListData.forEach(card => {
         cartText.classList.add('hidden');
         increDecre.classList.remove('hidden');
 
-        if(emptyCart && ordersDetails) {
+        if (!orderArray.includes(card)) {
+            orderArray.push(card);
+
+
+            const ordersDetails = document.querySelector('.ordersDetails');
+
+            orderArray.forEach(orderItems => {
+                const savingYou = document.querySelector('.savingYou');
+
+                savingYou.innerHTML += `
+            <div class="orderInner ordered flex justify-between items-center border-b-[1px] border-rose-200 py-5 ">
+             <div class="flex gap-2 flex-col">
+                <div class="font-bold text-md">${orderItems.name}</div>
+                <div class="flex gap-2 items-center justify-center">
+                    <p class="text-red-400 font-bold">0</p>
+                    <p class="text-sm text-rose-300">@${orderItems.price}</p>
+                    <p class="text-rose-300 font-bold">$${orderItems.price}</p>
+                </div>
+            </div>
+
+            <div class="cancelBtn h-5 w-5 flex text-blue-900 items-center justify-center cursor-pointer 
+                                    border-[1px] rounded-full hover:border-red-600 border-rose-500 
+                                    hover:filter hover:brightness-50"><img class="" src="/assets/images/icon-remove-item.svg" alt=""></div>
+            </div>
+`;
+                ordersDetails.prepend(savingYou);
+
+            });
+
+        }
+
+        if (emptyCart && ordersDetails) {
             emptyCart.classList.add('hidden');
             ordersDetails.classList.remove('hidden');
         }
-        
+
     });
 
     generalContainer.appendChild(cardsContainer)
 });
 
+
+const removeFromCart = orderArray.querySelector('.cancelBtn');
+removeFromCart.forEach(cancel => {
+    cancel.addEventListener('click', () => {
+        cancel.classList.toggle('hidden');
+    });
+});
 
 
 const cartTextValue = document.querySelectorAll('.cartTextValue');
@@ -192,8 +234,10 @@ function cartTotal() {
         prev + next, 0
     );
     trackOrder.textContent = `(${total})`;
+    return total
 }
 
+console.log(cartTotal())
 
 
 
