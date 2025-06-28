@@ -121,7 +121,7 @@ productListData.forEach(card => {
 
             </div>
 
-            <div 
+            <div onclick = "handleIncre(${card})"
                 class="increDecre hidden h-12 cursor-pointer text-white flex absolute items-center active:border-2 shadow active:border-blue-900 justify-between w-2/3 bg-red-600 rounded-full py-3 px-6 gap-2">
                 <img   class=" decrementBtn border-[1px] border-white p-2 rounded-full" src="/assets/images/icon-decrement-quantity.svg" alt="">
                 <p class = "cartTextValue" >0</p>
@@ -144,151 +144,116 @@ productListData.forEach(card => {
     const emptyCart = document.querySelector('.emptyCart');
     const ordersDetails = document.querySelector('.ordersDetails');
 
-    cartText.addEventListener('click', () => {
-    cartText.classList.add('hidden');
-    increDecre.classList.remove('hidden');
 
-    const savingYou = document.querySelector('.savingYou');
-    const ordersDetails = document.querySelector('.ordersDetails');
-
-    // Prevent duplicates by checking if it's already in orderArray
-    const alreadyInCart = orderArray.some(item => item.name === card.name);
-    if (!alreadyInCart) {
-        orderArray.push(card);
-
-        const orderDiv = document.createElement('div');
-        orderDiv.className = "orderInner ordered flex justify-between items-center border-b-[1px] border-rose-200 py-5";
-        orderDiv.innerHTML = `
-            <div class="flex gap-2 flex-col">
-                <div class="font-bold text-md">${card.name}</div>
-                <div class="flex gap-2 items-center justify-center">
-                    <p class="text-red-400 font-bold">0</p>
-                    <p class="text-sm text-rose-300">@${card.price}</p>
-                    <p class="text-rose-300 font-bold">$${card.price}</p>
-                </div>
-            </div>
-            <div class="cancelBtn h-5 w-5 flex text-blue-900 items-center justify-center cursor-pointer 
-                border-[1px] rounded-full hover:border-red-600 border-rose-500 
-                hover:filter hover:brightness-50">
-                <img src="/assets/images/icon-remove-item.svg" alt="">
-            </div>
-        `;
-        savingYou.appendChild(orderDiv);
-
-        // Add event listener to remove item on cancel click
-        orderDiv.querySelector('.cancelBtn').addEventListener('click', () => {
-            orderDiv.remove();
-            orderArray = orderArray.filter(item => item.name !== card.name);
-            cartTotal();
-            if (orderArray.length === 0) {
-                ordersDetails.classList.add('hidden');
-                document.querySelector('.emptyCart')?.classList.remove('hidden');
-            }
-        });
-    }
-
-    if (document.querySelector('.emptyCart') && ordersDetails) {
-        document.querySelector('.emptyCart').classList.add('hidden');
-        ordersDetails.classList.remove('hidden');
-    }
-});
-
-//     cartText.addEventListener('click', () => {
-//         cartText.classList.add('hidden');
-//         increDecre.classList.remove('hidden');
-
-//         if (!orderArray.includes(card)) {
-//             orderArray.push(card);
-
-
-//             const ordersDetails = document.querySelector('.ordersDetails');
-
-//             orderArray.forEach(orderItems => {
-//                 const savingYou = document.querySelector('.savingYou');
-
-//                 savingYou.innerHTML += `
-//             <div class="orderInner ordered flex justify-between items-center border-b-[1px] border-rose-200 py-5 ">
-//              <div class="flex gap-2 flex-col">
-//                 <div class="font-bold text-md">${orderItems.name}</div>
-//                 <div class="flex gap-2 items-center justify-center">
-//                     <p class="text-red-400 font-bold">0</p>
-//                     <p class="text-sm text-rose-300">@${orderItems.price}</p>
-//                     <p class="text-rose-300 font-bold">$${orderItems.price}</p>
-//                 </div>
-//             </div>
-
-//             <div class="cancelBtn h-5 w-5 flex text-blue-900 items-center justify-center cursor-pointer 
-//                                     border-[1px] rounded-full hover:border-red-600 border-rose-500 
-//                                     hover:filter hover:brightness-50"><img class="" src="/assets/images/icon-remove-item.svg" alt=""></div>
-//             </div>
-// `;              
-//                 ordersDetails.prepend(savingYou);
-        
-//             });
-
-//         }
-
-//         if (emptyCart && ordersDetails) {
-//             emptyCart.classList.add('hidden');
-//             ordersDetails.classList.remove('hidden');
-//         }
-
-//     });
 
     generalContainer.appendChild(cardsContainer)
 });
 
 
-const removeFromCart = orderArray.querySelector('.cancelBtn');
+function handleIncre(card) {
+    if (!orderArray.includes(card)) {
+        orderArray.push(card);
+
+    }
+}
+
+    const removeFromCart = orderArray.querySelector('.cancelBtn');
     removeFromCart.forEach(cancel => {
-        cancel.addEventListener('click', () =>{
-            cancel.classList.toggle('hidden');  
+        cancel.addEventListener('click', () => {
+            cancel.classList.toggle('hidden');
         });
     });
 
 
-const cartTextValue = document.querySelectorAll('.cartTextValue');
+    const cartTextValue = document.querySelectorAll('.cartTextValue');
 
 
 
 
-//decrement & increament
-let value = new Array(cartTextValue.length).fill(0);
+    //decrement & increament
+    let value = new Array(cartTextValue.length).fill(0);
 
-const decrementBtn = document.querySelectorAll('.decrementBtn');
-const incrementBtn = document.querySelectorAll('.incrementBtn');
+    const decrementBtn = document.querySelectorAll('.decrementBtn');
+    const incrementBtn = document.querySelectorAll('.incrementBtn');
 
-decrementBtn.forEach((decrease, index) => {
-    decrease.addEventListener('click', () => {
-        if (value[index] > 0) {
-            value[index]--;
+    decrementBtn.forEach((decrease, index) => {
+        decrease.addEventListener('click', () => {
+            if (value[index] > 0) {
+                value[index]--;
+                cartTextValue[index].textContent = value[index];
+                cartTotal()
+            }
+        });
+    });
+
+    incrementBtn.forEach((increase, index) => {
+        increase.addEventListener('click', () => {
+            value[index]++;
             cartTextValue[index].textContent = value[index];
             cartTotal()
-        }
+        })
     });
-});
-
-incrementBtn.forEach((increase, index) => {
-    increase.addEventListener('click', () => {
-        value[index]++;
-        cartTextValue[index].textContent = value[index];
-        cartTotal()
-    })
-});
 
 
-const trackOrder = document.querySelector('.trackOrder');
-function cartTotal() {
-    const total = value.reduce((prev, next) =>
-        prev + next, 0
-    );
-    trackOrder.textContent = `(${total})`;
-    return total
-}
+    const trackOrder = document.querySelector('.trackOrder');
+    function cartTotal() {
+        const total = value.reduce((prev, next) =>
+            prev + next, 0
+        );
+        trackOrder.textContent = `(${total})`;
+        return total
+    }
 
-console.log(cartTotal())
+    console.log(cartTotal())
 
 
+
+
+
+
+
+
+    cartText.addEventListener('click', () => {
+        cartText.classList.add('hidden');
+        increDecre.classList.remove('hidden');
+
+        if (!orderArray.includes(card)) {
+            orderArray.push(card);
+
+
+            const ordersDetails = document.querySelector('.ordersDetails');
+
+            orderArray.forEach(orderItems => {
+                const savingYou = document.querySelector('.savingYou');
+
+                savingYou.innerHTML += `
+            <div class="orderInner ordered flex justify-between items-center border-b-[1px] border-rose-200 py-5 ">
+             <div class="flex gap-2 flex-col">
+                <div class="font-bold text-md">${orderItems.name}</div>
+                <div class="flex gap-2 items-center justify-center">
+                    <p class="text-red-400 font-bold">0</p>
+                    <p class="text-sm text-rose-300">@${orderItems.price}</p>
+                    <p class="text-rose-300 font-bold">$${orderItems.price}</p>
+                </div>
+            </div>
+
+            <div class="cancelBtn h-5 w-5 flex text-blue-900 items-center justify-center cursor-pointer 
+                                    border-[1px] rounded-full hover:border-red-600 border-rose-500 
+                                    hover:filter hover:brightness-50"><img class="" src="/assets/images/icon-remove-item.svg" alt=""></div>
+            </div>
+`;
+                ordersDetails.prepend(savingYou);
+
+            });
+
+        }
+
+        if (emptyCart && ordersDetails) {
+            emptyCart.classList.add('hidden');
+            ordersDetails.classList.remove('hidden');
+        }
+
+    });
 
 
 
